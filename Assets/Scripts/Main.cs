@@ -7,19 +7,16 @@ namespace GeekbrainsPlatformer
     public class Main : MonoBehaviour
     {
         [SerializeField] private LevelOfObject playerView;
-        private AnimationConfig config;
-        private SpriteAnimatorController playerAnimator;
+        private MainHeroWalker hero;
 
         void Awake()
         {
-            config = Resources.Load<AnimationConfig>("AnimationRun");
-            playerAnimator = new SpriteAnimatorController(config);
-            playerAnimator.StartAnimation(playerView.spriteRenderer, AnimState.Run, true, 30f);
+            hero = new MainHeroWalker(playerView);
         }
 
         void Update()
         {
-            playerAnimator.Update();
+            hero.Update();
         }
     }
 }
