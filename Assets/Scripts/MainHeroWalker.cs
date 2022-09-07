@@ -18,6 +18,7 @@ namespace GeekbrainsPlatformer
         private bool _isJump;
         private bool isMoving;
         private float xAxisInput;
+        private int health = 30;
 
         private LevelOfObject _view;
         private SpriteAnimatorController _playerAnimator;
@@ -27,7 +28,7 @@ namespace GeekbrainsPlatformer
         private Transform playerT;
         private Rigidbody2D rigidbody;
 
-        public MainHeroWalker(LevelOfObject view)
+        public MainHeroWalker(InteractiveObjectView view)
         {
             _view = view;
             playerT = _view.transform;
@@ -36,6 +37,8 @@ namespace GeekbrainsPlatformer
             config = Resources.Load<AnimationConfig>("AnimationRun");
             _playerAnimator = new SpriteAnimatorController(config);
             contactPooler = new ContactPooler(view.collider);
+
+            view.TakeDamage += TakeBullet;
         }
 
         private void MoveTowards()
@@ -45,8 +48,18 @@ namespace GeekbrainsPlatformer
             playerT.localScale = xAxisInput < 0 ? _leftScale : _rightScale;
         }
 
+        public void TakeBullet(BulletView bullet)
+        {
+            health -= bullet.DamagePoint;
+        }
+
         public void Update()
         {
+            if(health <= 0)
+            {
+                health = 0;
+                _view.spriteRenderer.enabled = false;
+            }
             _playerAnimator.Update();
             contactPooler.Update();
             xAxisInput = Input.GetAxis("Horizontal");

@@ -7,6 +7,6 @@ namespace GeekbrainsPlatformer
     {
         public Transform muzzleT;
         public Transform emiterT;
-        public List<LevelOfObject> bullets;
+        public List<BulletView> bullets;
     }
 }
