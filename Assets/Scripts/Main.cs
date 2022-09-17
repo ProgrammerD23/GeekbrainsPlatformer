@@ -15,6 +15,10 @@ namespace GeekbrainsPlatformer
         private EmiterControler emiterControler;
         private GeneratorLevelController _generatorLevelController;
 
+        //
+        [SerializeField] private QuestObjectView singleQuestItem;
+        private QuestController questController;
+
         void Awake()
         {
             hero = new MainHeroWalker(playerView);
@@ -22,6 +26,9 @@ namespace GeekbrainsPlatformer
             emiterControler = new EmiterControler(cannonView.bullets, cannonView.emiterT);
             _generatorLevelController = new GeneratorLevelController(_generateLevelView);
             _generatorLevelController.Awake();
+
+            questController = new QuestController(playerView, new QuestCoinModel(), singleQuestItem);
+            questController.Reset();
         }
 
         void Update()
